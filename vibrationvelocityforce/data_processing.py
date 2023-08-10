@@ -1,6 +1,7 @@
 """Data processing methods"""
 
 import os
+import re
 import numpy as np
 
 from config import DATA_DIR, TEST_SIZE, RANDOM_SEED
@@ -26,10 +27,15 @@ class DataProcessing:
         self.train = np.array(self.train)
         self.test = np.array(self.test)
 
+        print(self.train_numbers)
+        print(self.test_numbers)
+        quit()
+
         self.train = np.reshape(self.train, (-1, self.train.shape[-1]))
 
     def read_raw(self):
         fnames = [fname for fname in os.listdir(DATA_DIR) if fname.endswith('odb.txt')]
+        fnames.sort(key=lambda x: int(re.search('\d+', x).group()))
         data = [
             np.loadtxt(f'{DATA_DIR}/{fname}', delimiter='\t', skiprows=2) for fname in fnames
         ]
