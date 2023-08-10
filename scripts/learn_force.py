@@ -24,6 +24,15 @@ def write_results(hyperopts, errors, variances):
                 f"{f'{errors[hyper_idx, 1]:.2f} +/- {variances[hyper_idx, 1]:.2f}'}\n"
             )
 
+def load_estimators(directory):
+    """Load already trained hyperopt objects"""
+    hyperopts = np.empty((len(REGRESSORS), OUTPUT_SIZE), dtype=object)
+    for idx, __ in enumerate(hyperopts):
+        hyperopts[idx] = load(
+            f'{directory}/hyperopt_{REGRESSORS[idx][0].__class__.__name__}.joblib'
+        )
+    return hyperopts
+
 def main():
     """Main method"""
     misc.gen_dirs([MODEL_DIR, RESULTS_DIR, PLOT_DIR])
@@ -31,7 +40,8 @@ def main():
     processing = DataProcessing()
     train_data, test_data = processing.get_train_test()
 
-    hyperopts = train(train_data)
+    # hyperopts = train(train_data)
+    hyperopts = load_estimators(MODEL_DIR)
     total_errors = np.empty((len(hyperopts), OUTPUT_SIZE))
     total_variances = np.empty((len(hyperopts), OUTPUT_SIZE))
     for hyper_idx, hyperopt in enumerate(hyperopts):
