@@ -45,8 +45,9 @@ def test(hyperopt, test_data, test_numbers):
             axs[out_idx].plot(target, linewidth=LINEWIDTH, label='Target')
             axs[out_idx].plot(pred, linewidth=LINEWIDTH, label='Prediction')
             axs[out_idx].set_title(TARGET_LBLS[out_idx], fontsize=FONTSIZE)
-            axs[out_idx].set_xlabel('Sample', fontsize=FONTSIZE)
-            axs[out_idx].set_ylabel('Force', fontsize=FONTSIZE)
+            axs[out_idx].set_ylabel('Force in N', fontsize=FONTSIZE)
+
+        axs[-1].set_xlabel('Sample', fontsize=FONTSIZE)
 
         axs[0].legend(
             bbox_to_anchor=(0., 1.02, 1., .102),
@@ -61,9 +62,11 @@ def test(hyperopt, test_data, test_numbers):
         fig.canvas.draw()
 
         for idx in range(OUTPUT_SIZE):
-            axs[idx] = modify_axis(axs[idx], '', 'N', -2, -2, FONTSIZE-2)
+            axs[idx] = modify_axis(axs[idx], '', '', -2, -2, FONTSIZE-2)
 
         fig.align_ylabels(axs)
+
+        fig.suptitle(f'CA {test_numbers[scenario_idx]}', fontsize=FONTSIZE)
 
         plt.tight_layout()
         plt.savefig(
