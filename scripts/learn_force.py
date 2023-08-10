@@ -1,5 +1,6 @@
 """Script for learning forces based on chip thickness and vibration velocity"""
 
+import misc
 import numpy as np
 from joblib import dump, load
 
@@ -7,7 +8,7 @@ from vibrationvelocityforce.data_processing import DataProcessing
 from vibrationvelocityforce.train import train
 from vibrationvelocityforce.test import test
 
-from config import OUTPUT_SIZE, MODEL_DIR, RESULTS_DIR
+from config import OUTPUT_SIZE, MODEL_DIR, RESULTS_DIR, REGRESSORS, PLOT_DIR
 
 def write_results(hyperopts, errors, variances):
     """Write results to file"""
@@ -25,6 +26,7 @@ def write_results(hyperopts, errors, variances):
 
 def main():
     """Main method"""
+    misc.gen_dirs([MODEL_DIR, RESULTS_DIR, PLOT_DIR])
 
     processing = DataProcessing()
     train_data, test_data = processing.get_train_test()
