@@ -27,10 +27,6 @@ class DataProcessing:
         self.train = np.array(self.train)
         self.test = np.array(self.test)
 
-        print(self.train_numbers)
-        print(self.test_numbers)
-        quit()
-
         self.train = np.reshape(self.train, (-1, self.train.shape[-1]))
 
     def read_raw(self):
