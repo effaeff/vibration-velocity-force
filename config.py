@@ -61,7 +61,7 @@ PARAM_DICTS = [
 ]
 REGRESSORS = [
     [ElasticNet(random_state=RANDOM_SEED, max_iter=100000) for __ in range(OUTPUT_SIZE)],
-    [LinearSVR(random_state=RANDOM_SEED, max_iter=100000, dual='auto') for __ in range(OUTPUT_SIZE)],
+    [LinearSVR(random_state=RANDOM_SEED, max_iter=100000, dual=True) for __ in range(OUTPUT_SIZE)],
     [xgb.XGBRegressor(objective='reg:squarederror') for __ in range(OUTPUT_SIZE)],
     [AdaBoostRegressor(random_state=RANDOM_SEED) for __ in range(OUTPUT_SIZE)],
     [GradientBoostingRegressor(random_state=RANDOM_SEED) for __ in range(OUTPUT_SIZE)],
