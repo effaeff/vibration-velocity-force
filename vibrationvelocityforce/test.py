@@ -20,7 +20,7 @@ from config import (
     TARGET_LBLS
 )
 
-def test(hyperopt, test_data):
+def test(hyperopt, test_data, test_numbers):
     errors = np.zeros((len(test_data), OUTPUT_SIZE))
     variances = np.zeros((len(test_data), OUTPUT_SIZE))
 
@@ -67,8 +67,9 @@ def test(hyperopt, test_data):
 
         plt.tight_layout()
         plt.savefig(
-            f'{PLOT_DIR}/{hyperopt[0].best_estimator_.__class__.__name__}_prediction.png',
+            f'{PLOT_DIR}/{hyperopt[0].best_estimator_.__class__.__name__}_CA_{test_numbers[scenario_idx]}.png',
             dpi=600
         )
+        plt.close()
 
         return np.mean(errors, axis=0), np.mean(variances, axis=0)
