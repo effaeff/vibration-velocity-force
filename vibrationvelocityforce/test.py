@@ -42,8 +42,8 @@ def test(hyperopt, test_data, test_numbers):
                 ]
             ) * 100.0
 
-            axs[out_idx].plot(target, linewidth=LINEWIDTH, label='Target', fontsize=FONTSIZE)
-            axs[out_idx].plot(pred, linewidth=LINEWIDTH, label='Prediction', fontsize=FONTSIZE)
+            axs[out_idx].plot(target, linewidth=LINEWIDTH, label='Target')
+            axs[out_idx].plot(pred, linewidth=LINEWIDTH, label='Prediction')
             axs[out_idx].set_title(TARGET_LBLS[out_idx], fontsize=FONTSIZE)
             axs[out_idx].set_xlabel('Sample', fontsize=FONTSIZE)
             axs[out_idx].set_ylabel('Force', fontsize=FONTSIZE)
@@ -72,4 +72,4 @@ def test(hyperopt, test_data, test_numbers):
         )
         plt.close()
 
-        return np.mean(errors, axis=0), np.mean(variances, axis=0)
+    return np.mean(errors, axis=0), np.mean(variances, axis=0)
