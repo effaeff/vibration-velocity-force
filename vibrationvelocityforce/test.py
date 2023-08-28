@@ -20,13 +20,14 @@ from config import (
     TARGET_LBLS
 )
 
-def test(hyperopt, test_data, test_numbers):
+def test(hyperopt, test_data, test_numbers, scaler):
     errors = np.zeros((len(test_data), OUTPUT_SIZE))
     variances = np.zeros((len(test_data), OUTPUT_SIZE))
 
     for scenario_idx, scenario in enumerate(test_data):
         fig, axs = plt.subplots(2, 1, sharex=True)
         inp = scenario[:, :INPUT_SIZE]
+        # inp = scaler.transform(inp)
 
         for out_idx in range(OUTPUT_SIZE):
             pred = hyperopt[out_idx].predict(inp)

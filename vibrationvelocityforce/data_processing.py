@@ -4,12 +4,14 @@ import os
 import re
 import numpy as np
 
-from config import DATA_DIR, TEST_SIZE, RANDOM_SEED
+from config import DATA_DIR, TEST_SIZE, RANDOM_SEED, INPUT_SIZE
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
 
 class DataProcessing:
     def __init__(self):
+        np.random.seed(RANDOM_SEED)
         data, sim_numbers = self.read_raw()
 
 
@@ -28,6 +30,11 @@ class DataProcessing:
         self.test = np.array(self.test)
 
         self.train = np.reshape(self.train, (-1, self.train.shape[-1]))
+
+        np.random.shuffle(self.train)
+
+        self.scaler = MinMaxScaler()
+        # self.train[:, :INPUT_SIZE] = self.scaler.fit_transform(self.train[:, :INPUT_SIZE])
 
     def read_raw(self):
         fnames = [fname for fname in os.listdir(DATA_DIR) if fname.endswith('odb.txt')]
@@ -59,3 +66,6 @@ class DataProcessing:
 
     def get_train_test(self):
         return self.train, self.train_numbers, self.test, self.test_numbers
+
+    def get_scaler(self):
+        return self.scaler

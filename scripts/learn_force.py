@@ -39,9 +39,10 @@ def main():
 
     processing = DataProcessing()
     train_data, train_numbers, test_data, test_numbers = processing.get_train_test()
+    scaler = processing.get_scaler()
 
-    # hyperopts = train(train_data)
-    hyperopts = load_estimators(MODEL_DIR)
+    hyperopts = train(train_data)
+    # hyperopts = load_estimators(MODEL_DIR)
     total_errors = np.empty((len(hyperopts), OUTPUT_SIZE))
     total_variances = np.empty((len(hyperopts), OUTPUT_SIZE))
     for hyper_idx, hyperopt in enumerate(hyperopts):
@@ -49,7 +50,7 @@ def main():
             hyperopt,
             f'{MODEL_DIR}/hyperopt_{hyperopt[0].best_estimator_.__class__.__name__}.joblib'
         )
-        errors, variances = test(hyperopt, test_data, test_numbers)
+        errors, variances = test(hyperopt, test_data, test_numbers, scaler)
         total_errors[hyper_idx] = errors
         total_variances[hyper_idx] = variances
     write_results(hyperopts, total_errors, total_variances)
